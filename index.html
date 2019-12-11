@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="main.css">
+    <title>Crud with Vanilla Javascript</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>
+                <form onsubmit="event.preventDefault().onFormSubmit()" autocomplete="off">
+                <div>
+                    <label>Full Name</label><label class="validation-error hide" id="fullNameValidationError">This feild is required.</label>
+                    <input type="text" name="fullName" id="fullName">
+                </div>
+                <div>
+                    <label>NHI Number</label>
+                    <input type="text" name="nhiNumber" id="nhiNumber">
+                </div>
+                <div>
+                    <label>Room Number</label>
+                    <input type="text" name="roomNumber" id="roomNumber">
+                </div>
+                <div>
+                    <label>Gestation</label>
+                    <input type="text" name="gestation" id="gestation">
+                </div>
+                <div>
+                    <label>Comments</label>
+                    <input type="text" name="comments" id="comments">
+                </div>
+                </form>
+            </td>
+            <td>
+            <table class="list" id="patientList">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>NHI Number</th>
+                        <th>Room Number</th>
+                        <th>Gestation</th>
+                        <th>Comments</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                </tbody>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <script src="main.js"></script>
+   
+</body>
+</html>

@@ -1,1 +1,1 @@
-# crud-pure-js
+CRUD Application using Vanilla Javascript

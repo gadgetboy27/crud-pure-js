@@ -35,8 +35,8 @@ function InsertNewRecord (data) {
   cell4.innerHTML = data.roomNumber
   cell5 = newRow.insertCell(4)
   cell5.innerHTML = data.comments
-  cell5 = newRow.insertCell(5)
-  cell5.innerHTML = `<a onClick='onEdit(this)'>Edit</a>
+  cell6 = newRow.insertCell(5)
+  cell6.innerHTML = `<a onClick='onEdit(this)'>Edit</a>
                     <a onClick='onDelete(this)'>Delete</a>`
 }
 
@@ -45,7 +45,7 @@ function resetForm () {
 }
 
 function onEdit (td) {
-  selectedRow = td.parentElement, parentElement
+  selectedRow = td.parentElement.parentElement
   document.getElementById('fullName').value = selectedRow.cells[0].innerHTML
   document.getElementById('nhiNumber').value = selectedRow.cells[1].innerHTML
   document.getElementById('gestation').value = selectedRow.cells[2].innerHTML

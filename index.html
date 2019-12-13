@@ -13,7 +13,7 @@
     <table>
         <tr>
             <td>
-                <form class="patientData" onsubmit="event.preventDefault().onFormSubmit()" autocomplete="off">
+                <form class="patientData" onsubmit="event.preventDefault();onFormSubmit()" autocomplete="off">
                 <div>
                     <label>Full Name*</label><label class="validation-error hide" id="fullNameValidationError">This feild is required.</label>
                     <input type="text" name="fullName" id="fullName">

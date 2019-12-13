@@ -11,54 +11,58 @@
 </head>
 <body>
     <table>
+        <tr>
+            <td>
+                <form class="patientData" onsubmit="event.preventDefault().onFormSubmit()" autocomplete="off">
+                <div>
+                    <label>Full Name*</label><label class="validation-error hide" id="fullNameValidationError">This feild is required.</label>
+                    <input type="text" name="fullName" id="fullName">
+                </div>
+                <div class="form-row">
+                <div class="col-md-6">
+                    <label>NHI Number</label>
+                    <input type="text" name="nhiNumber" id="nhiNumber">
+                </div>           
+                <div class="col-md-4">
+                    <label>Gestation/wks</label>
+                    <input type="number" name="gestation" id="gestation">
+                </div>
+                <div class="col-md-2">
+                    <label>Room Number</label>
+                    <input type="number" name="roomNumber" id="roomNumber">
+                </div>
+                </div>
+                <div>
+                    <label>Comments</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+                <div  class="form-action-buttons">
+                        <input type="submit" value="Submit">
+                    </div>
+                </form>
+            </td>
         <td>
-            <form onsubmit="event.preventDefault().onFormSubmit()" autocomplete="off">
-            <div>
-                <label>Full Name</label><label class="validation-error hide" id="fullNameValidationError">This feild is required.</label>
-                <input type="text" name="fullName" id="fullName">
-            </div>
-            <div class="form-row">
-            <div class="col-md-6">
-                <label>NHI Number</label>
-                <input type="text" name="nhiNumber" id="nhiNumber">
-            </div>           
-            <div class="col-md-4">
-                <label>Gestation/wks</label>
-                <input type="number" name="nhiNumber" id="nhiNumber">
-            </div>
-            <div class="col-md-2">
-                <label>Room Number</label>
-                <input type="number" name="nhiNumber" id="nhiNumber">
-            </div>
-            </div>
-            <div>
-                <label>Comments</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-            </div>
-            </form>
-        </td>
     </table>
         <table class="list" id="patientList">
             <thead>
                 <tr>
                     <th>Full Name</th>
                     <th>NHI Number</th>
-                    <th>Room Number</th>
-                    <th>Gestation</th>
+                    <th>Gestation/Wks</th>
+                    <th>Rm Number</th>
                     <th>Comments</th>
-
+                    <th></th>
                 </tr>
             </thead>
-            <tbody>
+                <tbody>
 
 
-            </tbody>
+                </tbody>
             </table>
-        
-        </td>
-        
+        </td> 
+    </tr>      
     </table>
-    <script src="main.js"></script>
+    <script src="index.js"></script>
    
 </body>
 </html>

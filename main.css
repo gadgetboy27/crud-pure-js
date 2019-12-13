@@ -29,9 +29,9 @@ input[type=text],input[type=number] {
 }
 
 input[type=submit]{
-    width: 30%;
-    background-color: #ddd;
-    color: #000;
+    width: 100%;
+    background-color: rgb(19, 174, 231);
+    color: #fff;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;

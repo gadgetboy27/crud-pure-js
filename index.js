@@ -9,7 +9,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const ccicon = document.getElementById('ccicon');
     const ccsingle = document.getElementById('ccsingle');
     const generatecard = document.getElementById('generatecard');
-
+    console.log(generatecard, 'working')
+    console.log(document, 'selected document window')
 
     let cctype = null;
 
@@ -138,6 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
           input.setAttribute('class', '');
           input.setAttribute('class', 'darkcolor ' + basecolor + 'dark');
         });
+        console.log(swapColor, 'got a hit')
     };
 
 
@@ -214,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
     generatecard.addEventListener('click', () => {
       randomCard();
-      console.log(randomCard, 'pressed btn');
+      console.log(randomCard, 'selected');
     });
 
 
@@ -279,5 +281,6 @@ document.addEventListener('DOMContentLoaded', function () {
     securitycode.addEventListener('focus', function () {
       document.querySelector('.creditcard').classList.add('flipped');
     });
+    console.log(securitycode, 'security code')
 
   });

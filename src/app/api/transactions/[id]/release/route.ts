@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import { capturePaymentIntent, createTransfer } from '@/lib/stripe';
+import { sendFundsReleasedToSellerEmail, sendTransactionCompleteEmail } from '@/lib/email';
 
 export async function POST(
   request: NextRequest,
@@ -95,7 +96,28 @@ export async function POST(
       },
     });
 
-    // TODO: Send email notifications to both parties
+    // Send email notifications to both parties
+    try {
+      // Email to seller about funds released
+      await sendFundsReleasedToSellerEmail(
+        transaction.seller.email,
+        transaction.seller.name || 'Seller',
+        transaction.productName,
+        parseFloat(transaction.sellerReceives.toString()),
+        transaction.id
+      );
+
+      // Email to buyer about transaction complete
+      await sendTransactionCompleteEmail(
+        transaction.buyer.email,
+        transaction.buyer.name || 'Buyer',
+        transaction.seller.name || 'Seller',
+        transaction.productName,
+        transaction.id
+      );
+    } catch (emailError) {
+      console.error('Failed to send completion emails:', emailError);
+    }
 
     return NextResponse.json({
       message: 'Funds released successfully',

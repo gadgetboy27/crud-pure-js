@@ -5,6 +5,7 @@ import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import { calculateFees, validateUrl, generatePasscode } from '@/lib/utils';
 import { Decimal } from '@prisma/client/runtime/library';
+import { sendTransactionCreatedEmail } from '@/lib/email';
 
 const createTransactionSchema = z.object({
   sellerId: z.string().optional(), // Optional for new sellers
@@ -104,8 +105,20 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // TODO: Send email notifications to both parties
-    // TODO: If passcode type, send passcode to both parties
+    // Send email notification to seller
+    try {
+      await sendTransactionCreatedEmail(
+        transaction.seller.email,
+        transaction.seller.name || 'Seller',
+        transaction.buyer.name || 'Buyer',
+        transaction.productName,
+        parseFloat(transaction.amount.toString()),
+        transaction.id
+      );
+    } catch (emailError) {
+      console.error('Failed to send transaction created email:', emailError);
+      // Don't fail the transaction if email fails
+    }
 
     return NextResponse.json(
       {

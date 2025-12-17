@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import { createPaymentIntent } from '@/lib/stripe';
+import { sendPaymentReceivedEmail } from '@/lib/email';
 
 const paymentSchema = z.object({
   paymentMethodId: z.string(),
@@ -88,6 +89,21 @@ export async function POST(
         paidAt: new Date(),
       },
     });
+
+    // Send payment received emails to both parties
+    try {
+      await sendPaymentReceivedEmail(
+        transaction.buyer.email,
+        transaction.seller.email,
+        transaction.buyer.name || 'Buyer',
+        transaction.seller.name || 'Seller',
+        transaction.productName,
+        parseFloat(transaction.amount.toString()),
+        transaction.id
+      );
+    } catch (emailError) {
+      console.error('Failed to send payment received email:', emailError);
+    }
 
     return NextResponse.json({
       message: 'Payment initiated successfully',

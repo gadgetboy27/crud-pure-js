@@ -5,6 +5,7 @@ import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import { createTracking, getCarrierCode } from '@/lib/tracking';
 import { addDays } from 'date-fns';
+import { sendItemShippedEmail } from '@/lib/email';
 
 const shipSchema = z.object({
   trackingNumber: z.string().min(5, 'Invalid tracking number'),
@@ -99,7 +100,21 @@ export async function POST(
       },
     });
 
-    // TODO: Send email notification to buyer with tracking info
+    // Send email notification to both parties with tracking info
+    try {
+      await sendItemShippedEmail(
+        updatedTransaction.buyer.email,
+        updatedTransaction.seller.email,
+        updatedTransaction.buyer.name || 'Buyer',
+        updatedTransaction.seller.name || 'Seller',
+        updatedTransaction.productName,
+        updatedTransaction.trackingNumber!,
+        updatedTransaction.trackingCarrier!,
+        updatedTransaction.id
+      );
+    } catch (emailError) {
+      console.error('Failed to send shipped email:', emailError);
+    }
 
     return NextResponse.json({
       message: 'Shipment tracking added successfully',

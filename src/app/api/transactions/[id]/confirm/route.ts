@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth/next';
 import { z } from 'zod';
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
+import { sendTransactionConfirmedEmail } from '@/lib/email';
 
 const confirmSchema = z.object({
   passcode: z.string().optional(),
@@ -117,6 +118,22 @@ export async function POST(
         userAgent: request.headers.get('user-agent'),
       },
     });
+
+    // Send email if both parties confirmed
+    if (bothConfirmed) {
+      try {
+        await sendTransactionConfirmedEmail(
+          updatedTransaction.buyer.email,
+          updatedTransaction.buyer.name || 'Buyer',
+          updatedTransaction.seller.name || 'Seller',
+          updatedTransaction.productName,
+          parseFloat(updatedTransaction.amount.toString()),
+          updatedTransaction.id
+        );
+      } catch (emailError) {
+        console.error('Failed to send confirmation email:', emailError);
+      }
+    }
 
     return NextResponse.json({
       message: 'Transaction confirmed successfully',
